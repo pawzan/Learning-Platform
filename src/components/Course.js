@@ -22,7 +22,7 @@ function Course(props) {
       <Menu visible={true} />
 
       <div className="mt-5 fv float-start">
-        <CourseNav courseId={props.courseId} />
+        <CourseNav courseId={props.courseId} nick={props.nick} />
       </div>
       <div className="mt-5 fv">sad</div>
     </>
