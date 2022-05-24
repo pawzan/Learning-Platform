@@ -1,0 +1,124 @@
+{
+  "course": [
+    {
+      "id": 1,
+      "title": "Kurs PHP",
+      "description": "To jest fajny kurs PHP",
+      "password": "haslo123",
+      "singup": true,
+      "fileTrack": "./kurs.jpg",
+      "author": "Michal Walcz"
+    },
+    {
+      "id": 2,
+      "title": "Kurs PHP 2",
+      "description": "To jest fajny kurs PHP 2",
+      "password": "haslo123",
+      "singup": false,
+      "fileTrack": "./kurs.jpg",
+      "author": "Tomasz Kubica"
+    },
+    {
+      "id": 3,
+      "title": "Kurs PHP 3",
+      "description": "To jest fajny kurs PHP 3",
+      "password": "haslo123",
+      "singup": true,
+      "fileTrack": "./kurs.jpg",
+      "author": "Kuba Malisz"
+    },
+    {
+      "id": 4,
+      "title": "Kurs PHP 3",
+      "description": "To jest fajny kurs PHP 3",
+      "password": "haslo123",
+      "singup": true,
+      "fileTrack": "./kurs.jpg",
+      "author": "Kuba Malisz"
+    },
+    {
+      "id": "10",
+      "title": " Kurs PHP",
+      "description": "siemka",
+      "password": "haslo",
+      "singup": false,
+      "fileTrack": "C:\\fakepath\\66.png",
+      "author": "Paweł Zaniewski"
+    },
+    {
+      "id": "IhNXxH1",
+      "title": "Kurs React",
+      "description": "To jest kurs React",
+      "password": "haslo1123",
+      "singup": false,
+      "fileTrack": "C:\\fakepath\\66.png",
+      "author": "Paweł Zaniewski"
+    },
+    {
+      "id": "MaY1WNl",
+      "title": " Kurs PHP",
+      "description": "Kurs PHP mega",
+      "password": "123",
+      "singup": false,
+      "fileTrack": " ",
+      "author": "Paweł Zaniewski"
+    },
+    {
+      "id": "M98USGO",
+      "title": " Mega kurs PHP",
+      "description": "Nowy kurs PHP",
+      "password": "sad",
+      "singup": false,
+      "fileTrack": " ",
+      "author": "Paweł Zaniewski"
+    },
+    {
+      "id": "2t2-cMW",
+      "title": " gg",
+      "description": "fdf",
+      "password": "xv",
+      "singup": false,
+      "fileTrack": " ",
+      "author": "Paweł Zaniewski"
+    },
+    {
+      "id": "2t2-c3W",
+      "title": " gg",
+      "description": "fdf",
+      "password": "xv",
+      "singup": false,
+      "fileTrack": " ",
+      "author": "Paweł Zaniewski"
+    },
+    {
+      "id": "1yXOWPG",
+      "title": " ",
+      "description": " ",
+      "password": " ",
+      "singup": false,
+      "fileTrack": " ",
+      "author": "Paweł Zaniewski"
+    }
+  ],
+  "courseLesson": [
+    {
+      "courseId": 1,
+      "lesson": [
+        {
+          "id": 1,
+          "title": "kurs 1"
+        },
+        {
+          "id": 2,
+          "title": "kurs 2"
+        },
+        {
+          "id": 3,
+          "title": "kurs 3"
+        }
+      
+      ]
+    }
+    
+  ]
+}
