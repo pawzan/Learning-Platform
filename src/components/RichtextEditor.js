@@ -50,12 +50,12 @@ const RichtextEditor = (props) => {
             <div>
               <form onSubmit={handleSubmit}>
                 <TextField
+                  disabled
                   id="standard-basic"
                   label="Tytuł"
                   sx={{ mb: 3, width: "100%" }}
                   name="title"
                   value={value}
-                  onChange={(e) => setValue(e.target.value)}
                 ></TextField>
                 <Box>
                   <div>
