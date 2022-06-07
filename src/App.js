@@ -169,9 +169,13 @@ class App extends React.Component {
               <Route exact path="/newCourse" component={newCourse} />
               <Route
                 exact
-                path="/Course/:id/1"
+                path="/Course/:id/:lessonid"
                 component={(props) => (
-                  <Course courseId={props.match.params.id} />
+                  <Course
+                    courseId={props.match.params.id}
+                    nick={nick}
+                    lessonId={props.match.params.lessonid}
+                  />
                 )}
               />
               {/* <Route
