@@ -44,7 +44,7 @@ const CourseContainer = (props) => {
             Zapisz się
           </a>
         ) : menu === true ? (
-          <Link to={`Course/${courses.id}/1`}>
+          <Link to={`Course/${courses.id}/*`}>
             <a className="btn text-white bg-dark bg-gradient">Wejdź</a>
           </Link>
         ) : (

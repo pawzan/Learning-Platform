@@ -65,9 +65,10 @@ const ShowCourse = (props) => {
         setLessonTitle(value);
       });
     };
+    console.log(lesson.tittle);
 
     return (
-      <div className="mt-2 shadow" key={lesson.id}>
+      <div className="mt-2 shadow">
         <div className="card">
           <h5 className="card-header ">
             <div className="float-start">
@@ -125,7 +126,11 @@ const ShowCourse = (props) => {
   };
 
   const List = (props) =>
-    lessonList.map((lesson, index) => <CompList lesson={lesson} />);
+    lessonList.map((lesson, index) => (
+      <div key={`item-${index}`}>
+        <CompList lesson={lesson} />
+      </div>
+    ));
 
   return (
     <>

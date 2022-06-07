@@ -15,16 +15,38 @@ import { Link } from "react-router-dom";
 import CourseContent from "./CourseContent";
 import { BrowserRouter, Route, Router } from "react-router-dom";
 import CourseNav from "./CourseNav";
+import QuizComponent from "./QuizComponent";
 
-function Course(props) {
+function Course({ nick, courseId, lessonId, id_user }) {
   return (
     <>
-      <Menu visible={true} />
+      {/* <Menu visible={true} nick={nick} />
 
-      <div className="mt-5 fv float-start">
-        <CourseNav courseId={props.courseId} nick={props.nick} />
+      <div className="mt-5 fv float-start border border-dark">
+        <CourseNav courseId={courseId} nick={nick} />
       </div>
-      <div className="mt-5 fv">sad</div>
+      <div className="mt-5 fv border border-dark mx-1">
+        <CourseContent lessonId={lessonId} />
+      </div> */}
+      <div className="container-fluid">
+        <header className=" bg-dark d-block">
+          <Menu visible={true} nick={nick} />
+        </header>
+
+        <div className="row">
+          <div className=" float-start col-1 mt-5 ml-2 h-auto">
+            <CourseNav courseId={courseId} nick={nick} />
+          </div>
+
+          <div
+            style={{ padding: "50px" }}
+            className=" float-end col-11 mt-5 h-auto position-relative"
+          >
+            <CourseContent lessonId={lessonId} id_user={id_user} />
+            <QuizComponent lessonId={lessonId} />
+          </div>
+        </div>
+      </div>
     </>
   );
 }

@@ -1,104 +1,216 @@
-import React from "react";
+import React, { useState } from "react";
 import mainLogo from "./Logo.png";
-import { IoMdSchool, IoIosCreate, IoIosList } from "react-icons/io";
+import {
+  IoMdSchool,
+  IoIosCreate,
+  IoIosList,
+  IoMdChatboxes,
+} from "react-icons/io";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import axios from "axios";
+import Questionnaire from "./Questionnaire";
 
-class Register extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    const Login = "/";
-    const frameVariants = {
-      hover: { scale: 1.05 },
-    };
-    return (
-      <section className="h-100 gradient-form">
-        <div className="container py-5 h-100">
-          <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-xl-10">
-              <div className="card rounded-3 text-black">
-                <div className="row g-0">
-                  <div className="col-lg-6">
-                    <div className="card-body p-md-5 mx-md-4">
-                      <div className="text-center">
-                        <img src={mainLogo} width="85" height="85" alt="logo" />
-                      </div>
-                      <div className="container">
-                        <div className="nextContainer">
-                          <form action="#">
-                            <div className="text-center">
-                              <p>Zarejestruj się</p>
-                            </div>
+const Register = () => {
+  const [errors, setErrors] = useState("");
+  const [formData, setFormData] = useState({
+    login: "",
+    email: "",
+    password: "",
+    name: "",
+    surname: "",
+    passwordCheck: "",
+    questionnaire: "",
+  });
+  const [step, setStep] = useState(1);
 
-                            <div className="form-outline mb-4">
-                              <input
-                                type="text"
-                                name="login"
-                                className="form-control"
-                                placeholder="Podaj login"
-                              />
-                              <label
-                                className="form-label"
-                                for="form2Example11"
-                              >
-                                Nazwa uzytkownika
-                              </label>
-                            </div>
+  const onInputChange = async (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const { login, email, name, surname, password, passwordCheck } = formData;
 
-                            <div className="form-outline mb-4">
-                              <input
-                                type="text"
-                                name="email"
-                                className="form-control"
-                                placeholder="Podaj email"
-                              />
-                              <label
-                                className="form-label"
-                                for="form2Example11"
-                              >
-                                Nazwa uzytkownika
-                              </label>
-                            </div>
+  const Login = "/";
+  console.log(formData);
+  const frameVariants = {
+    hover: { scale: 1.05 },
+  };
 
-                            <div className="form-outline mb-4">
-                              <input
-                                type="password"
-                                name="haslo"
-                                className="form-control"
-                                placeholder="Podaj haslo"
-                              />
-                              <label
-                                className="form-label"
-                                for="form2Example22"
-                              >
-                                Haslo
-                              </label>
-                            </div>
+  const nextStep = () => {
+    setStep(step + 1);
+  };
+  const prevStep = () => {
+    setStep(step - 1);
+  };
 
-                            <div className="form-outline mb-4">
-                              <input
-                                type="password"
-                                name="hasloCheck"
-                                className="form-control"
-                                placeholder="Powtórz haslo"
-                              />
-                              <label
-                                className="form-label"
-                                for="form2Example22"
-                              >
-                                Powtórz Haslo
-                              </label>
-                            </div>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (formData.questionnaire == "") {
+      alert("Musisz wypełnic ankiete, aby się zarejestrować !");
+    } else {
+      axios
+        .post("http://localhost/api/register.php", formData)
+        .then((result) => {
+          console.log(JSON.stringify(result.data));
+        })
+        .catch((error) => {
+          const errorMsg = JSON.stringify(error.data);
+          setErrors(errorMsg);
+        })
+        .then(() => {
+          // setSubmitting(false);
+        });
+    }
+  };
+  switch (step) {
+    case 1:
+      return (
+        <section className="h-100 gradient-form">
+          <div className="container py-5 ">
+            <div className="row d-flex justify-content-center align-items-center ">
+              <div className="col-xl-6">
+                <div className="card rounded-3 text-black">
+                  <div className="row g-0">
+                    <div className="col-lg-12">
+                      <div className="card-body p-md-5 mx-md-4">
+                        {errors}
+                        <div className="text-center">
+                          <img
+                            src={mainLogo}
+                            width="85"
+                            height="85"
+                            alt="logo"
+                          />
+                        </div>
+                        <div className="container">
+                          <div className="nextContainer">
+                            <form onSubmit={handleSubmit}>
+                              <div className="text-center">
+                                <p>Zarejestruj się</p>
+                              </div>
 
-                            <div className="text-center pt-1 mb-5 pb-1 button">
-                              <input
-                                className="btn btn-info btn-block fa-lg gradient-custom-2 mb-3"
-                                type="submit"
-                                value="Zarejestruj sie"
-                              />
-                            </div>
+                              <div className="form-outline mb-4">
+                                <input
+                                  type="text"
+                                  name="login"
+                                  value={login}
+                                  className="form-control"
+                                  placeholder="Podaj login"
+                                  onChange={(e) => onInputChange(e)}
+                                  required
+                                />
+                                <label
+                                  className="form-label"
+                                  for="form2Example11"
+                                >
+                                  Nazwa uzytkownika
+                                </label>
+                              </div>
+                              <div className="form-outline mb-4">
+                                <input
+                                  type="text"
+                                  name="name"
+                                  value={name}
+                                  className="form-control"
+                                  placeholder="Podaj imie"
+                                  onChange={(e) => onInputChange(e)}
+                                  required
+                                />
+                                <label
+                                  className="form-label"
+                                  for="form2Example11"
+                                >
+                                  Imię
+                                </label>
+                              </div>
+                              <div className="form-outline mb-4">
+                                <input
+                                  type="text"
+                                  name="surname"
+                                  value={surname}
+                                  className="form-control"
+                                  placeholder="Podaj nazwisko"
+                                  onChange={(e) => onInputChange(e)}
+                                  required
+                                />
+                                <label
+                                  className="form-label"
+                                  for="form2Example11"
+                                >
+                                  Nazwisko
+                                </label>
+                              </div>
+
+                              <div className="form-outline mb-4">
+                                <input
+                                  type="email"
+                                  name="email"
+                                  value={email}
+                                  className="form-control"
+                                  placeholder="Podaj email"
+                                  onChange={(e) => onInputChange(e)}
+                                  required
+                                />
+                                <label
+                                  className="form-label"
+                                  for="form2Example11"
+                                >
+                                  E-mail uzytkownika
+                                </label>
+                              </div>
+
+                              <div className="form-outline mb-4">
+                                <input
+                                  type="password"
+                                  name="password"
+                                  value={password}
+                                  className="form-control"
+                                  placeholder="Podaj haslo"
+                                  onChange={(e) => onInputChange(e)}
+                                  required
+                                />
+                                <label
+                                  className="form-label"
+                                  for="form2Example22"
+                                >
+                                  Haslo
+                                </label>
+                              </div>
+
+                              <div className="form-outline mb-4">
+                                <input
+                                  type="password"
+                                  name="passwordCheck"
+                                  value={passwordCheck}
+                                  className="form-control"
+                                  placeholder="Powtórz haslo"
+                                  onChange={(e) => onInputChange(e)}
+                                  required
+                                />
+                                <label
+                                  className="form-label"
+                                  for="form2Example22"
+                                >
+                                  Powtórz Haslo
+                                </label>
+                              </div>
+                              {formData.questionnaire == "" ? (
+                                <h1 className="text-danger" onClick={nextStep}>
+                                  <h2>
+                                    Wypełnij ankietę, aby się zarejstrować
+                                  </h2>
+                                </h1>
+                              ) : (
+                                <></>
+                              )}
+
+                              <div className="text-center pt-1 mb-5 pb-1 mt-5 button">
+                                <input
+                                  className="btn btn-info btn-block fa-lg gradient-custom-2 mb-3"
+                                  type="submit"
+                                  value="Zarejestruj sie"
+                                />
+                              </div>
+                            </form>
                             <div className="errorText"></div>
                             <div className="d-flex align-items-center justify-content-center pb-4">
                               <p className="mb-0 me-2">Masz juz konto ?</p>
@@ -109,46 +221,7 @@ class Register extends React.Component {
                                 Zaloguj sie
                               </Link>
                             </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-6 d-flex align-items-center gradient-custom-2">
-                    <div className="text-black px-3 py-4 p-md-5 mx-md-4">
-                      <div className="d-grid gap-3">
-                        <div className="p-4">
-                          <motion.div
-                            variants={frameVariants}
-                            whileHover="hover"
-                          >
-                            <IoMdSchool size={65} color="#2F4F4F" />
-                            <div className="fs-6 float-sm-end my-4">
-                              Ucz się z wybranych kursów
-                            </div>
-                          </motion.div>
-                        </div>
-                        <div className="p-4">
-                          <motion.div
-                            variants={frameVariants}
-                            whileHover="hover"
-                          >
-                            <IoIosCreate size={65} color="#2F4F4F" />
-                            <div className="fs-6 float-sm-end my-4">
-                              Twórz kursy
-                            </div>
-                          </motion.div>
-                        </div>
-                        <div className="p-4">
-                          <motion.div
-                            variants={frameVariants}
-                            whileHover="hover"
-                          >
-                            <IoIosList size={65} color="#2F4F4F" />
-                            <div className="fs-6 float-sm-end my-4 ml-1 text-sm-start">
-                              Sprawdz swoją wiedze
-                            </div>
-                          </motion.div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -157,10 +230,19 @@ class Register extends React.Component {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-    );
+        </section>
+      );
+    case 2:
+      return (
+        <>
+          <Questionnaire
+            prevStep={prevStep}
+            formData={formData}
+            setFormData={setFormData}
+          />
+        </>
+      );
   }
-}
+};
 
 export default Register;

@@ -1,254 +1,287 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import TeachingMenu from "./TeachingMenu";
 import TextField from "@mui/material/TextField";
 import { Button, Checkbox, Switch } from "@mui/material";
-import { BsHeadphones } from "react-icons/bs";
-import { BiTask } from "react-icons/bi";
-import { FaRegEye } from "react-icons/fa";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
-import DirectionsIcon from "@mui/icons-material/Directions";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
-import FormLabel from "@mui/material/FormLabel";
 
-const Quiz = (props) => {
+const Quiz = ({ lessonId, nick }) => {
   const { stateParam, stateParam1 } = useLocation().state;
-  const [lessonID, setLessonId] = useState(props.lessonId);
-  const [form, setForm] = useState([]);
+  const [lessonID, setLessonId] = useState(lessonId);
+  const [form, setForm] = useState(null);
+  const [count, setCount] = useState(0);
 
-  const handleAddForm = (e) => {
+  const loadQuiz = async () => {
+    const result = await axios.get(
+      `http://localhost/api/contentQuiz.php?json=${lessonId}`
+    );
+
+    setForm(result.data.lessonData);
+  };
+
+  useEffect(() => {
+    loadQuiz();
+  }, []);
+
+  const handleRemove = (id) => {
+    axios
+      .delete(`http://localhost/api/quizDelete.php?id=${id}`)
+      .then((result) => {
+        loadQuiz();
+      });
+  };
+
+  const DelButton = ({ id }) => (
+    <Button variant="outlined" color="warning" onClick={() => handleRemove(id)}>
+      X
+    </Button>
+  );
+
+  const handleAddForm = async () => {
     const inputState = {
       lesson_id: lessonID,
-      Question: "",
+      question: "",
       A: "",
       B: "",
       C: "",
       D: "",
-      correctA: false,
-      correctB: false,
-      correctC: false,
-      correctD: false,
+      correctA: "0",
+      correctB: "0",
+      correctC: "0",
+      correctD: "0",
     };
-
-    setForm((prev) => [...prev, inputState]);
-  };
-
-  const handleRemove = (e, index) => {
-    e.preventDefault();
-
-    setForm((prev) => prev.filter((item) => item !== prev[index]));
-  };
-
-  console.log(form);
-
-  const onChange = (index, event) => {
-    event.preventDefault();
-    event.persist();
-    setForm((prev) => {
-      return prev.map((item, i) => {
-        if (i !== index) {
-          return item;
-        }
-
-        return {
-          ...item,
-          [event.target.name]: event.target.value,
-        };
-      });
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const text = { content, value, lessonID };
-
-    fetch("http://localhost/api/lessonUpdate.php", {
+    const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(text),
-    }).then(() => {
-      console.log("add");
-    });
+      body: JSON.stringify(inputState),
+    };
+    await fetch(`http://localhost/api/quiz.php`, requestOptions)
+      .then((response) => console.log(JSON.stringify(response)))
+      .then((result) => {
+        loadQuiz();
+        setCount(count + 1);
+        setForm((prev) => [...prev, inputState]);
+      })
+      .catch((error) => console.log(error));
   };
 
-  const handleChange = (index, event) => {
-    event.preventDefault();
-    event.persist();
-    setForm((prev) => {
-      return prev.map((item, i) => {
-        if (i !== index) {
-          return item;
-        }
+  const QuizList = ({ item, index }) => {
+    const [quizQuestion, setQuizQuestion] = useState(item.question);
+    const [A, setA] = useState(item.A);
+    const [B, setB] = useState(item.B);
+    const [C, setC] = useState(item.C);
+    const [D, setD] = useState(item.D);
+    const [correctA, setCorrectA] = useState(item.correctA);
+    const [correctB, setCorrectB] = useState(item.correctB);
+    const [correctC, setCorrectC] = useState(item.correctC);
+    const [correctD, setCorrectD] = useState(item.correctD);
+    console.log(A);
+    const id = item.id;
 
-        return {
-          ...item,
-          [event.target.name]: event.target.checked,
-        };
+    const quiz = {
+      quizQuestion,
+      A,
+      B,
+      C,
+      D,
+      correctA,
+      correctB,
+      correctC,
+      correctD,
+      id,
+    };
+    const handleSubmit = (e) => {
+      fetch("http://localhost/api/quizUpdate.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(quiz),
+      }).then(() => {
+        console.log("add : " + JSON.stringify(quiz));
       });
-    });
+    };
+    useEffect(() => {
+      handleSubmit();
+    }, [quiz]);
+
+    return (
+      <div>
+        <div>
+          <form onChange={handleSubmit}>
+            <TextField
+              id="standard-basic"
+              label={`Pytanie ${index + 1}`}
+              sx={{ mb: 3, width: "100%", mt: 3 }}
+              name="Question"
+              value={quizQuestion}
+              InputProps={{
+                endAdornment: <DelButton index={index} id={id} />,
+              }}
+              onChange={(e) => {
+                setQuizQuestion(e.target.value);
+              }}
+            ></TextField>
+
+            <div className="row  justify-content-center">
+              <Paper
+                sx={{
+                  p: "2px 4px",
+                  display: "flex",
+                  alignItems: "center",
+                  width: "80%",
+                  mb: 1,
+                }}
+              >
+                <IconButton sx={{ p: "10px" }} aria-label="menu">
+                  A
+                </IconButton>
+                <InputBase
+                  sx={{ ml: 1, flex: 1 }}
+                  placeholder=""
+                  value={A}
+                  name="A"
+                  onChange={(e) => {
+                    setA(e.target.value);
+                  }}
+                />
+                <Checkbox
+                  color="success"
+                  name="correctA"
+                  value="correctA"
+                  checked={correctA == 1 ? true : false}
+                  onClick={(e) => {
+                    setCorrectA(e.target.checked === false ? 0 : 1);
+                  }}
+                />
+              </Paper>
+
+              <Paper
+                sx={{
+                  p: "2px 4px",
+                  display: "flex",
+                  alignItems: "center",
+                  width: "80%",
+                  mb: 1,
+                }}
+              >
+                <IconButton sx={{ p: "10px" }} aria-label="menu">
+                  B
+                </IconButton>
+                <InputBase
+                  sx={{ ml: 1, flex: 1 }}
+                  placeholder=""
+                  value={B}
+                  name="B"
+                  onChange={(e) => {
+                    setB(e.target.value);
+                  }}
+                />
+                <Checkbox
+                  color="success"
+                  name="correctB"
+                  checked={correctB == 1 ? true : false}
+                  onClick={(e) => {
+                    setCorrectB(e.target.checked === false ? 0 : 1);
+                  }}
+                />
+              </Paper>
+
+              <Paper
+                sx={{
+                  p: "2px 4px",
+                  display: "flex",
+                  alignItems: "center",
+                  width: "80%",
+                  mb: 1,
+                }}
+              >
+                <IconButton sx={{ p: "10px" }} aria-label="menu">
+                  C
+                </IconButton>
+                <InputBase
+                  sx={{ ml: 1, flex: 1 }}
+                  placeholder=""
+                  value={C}
+                  name="C"
+                  onChange={(e) => {
+                    setC(e.target.value);
+                  }}
+                />
+                <Checkbox
+                  color="success"
+                  name="correctC"
+                  checked={correctC == 1 ? true : false}
+                  onClick={(e) => {
+                    setCorrectC(e.target.checked === false ? 0 : 1);
+                  }}
+                />
+              </Paper>
+
+              <Paper
+                sx={{
+                  p: "2px 4px",
+                  display: "flex",
+                  alignItems: "center",
+                  width: "80%",
+                }}
+              >
+                <IconButton sx={{ p: "10px" }} aria-label="menu">
+                  D
+                </IconButton>
+                <InputBase
+                  sx={{ ml: 1, flex: 1 }}
+                  placeholder=""
+                  value={D}
+                  name="D"
+                  onChange={(e) => {
+                    setD(e.target.value);
+                  }}
+                ></InputBase>
+                <Checkbox
+                  color="success"
+                  name="correctD"
+                  checked={correctD == 1 ? true : false}
+                  onClick={(e) => {
+                    setCorrectD(e.target.checked === false ? 0 : 1);
+                  }}
+                />
+              </Paper>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
   };
 
-  const DelButton = (props) => (
-    <Button
-      variant="outlined"
-      color="warning"
-      onClick={(e) => handleRemove(e, props.index)}
-    >
-      X
-    </Button>
-  );
+  const List = ({ form }) =>
+    form.map((item, index) => (
+      <div key={`item-${index}`}>
+        <QuizList item={item} index={index} />
+      </div>
+    ));
 
   const label = { inputProps: { "aria-label": "Switch demo" } };
   return (
     <>
       <div className="container-fluid">
         <div className="row fill">
-          <TeachingMenu nick={props.nick} />
+          <TeachingMenu nick={nick} />
           <div className="col mt-5">
             <h1 className="p1">Quiz do lekcji</h1>
             <div className="container my-5 ">
-              <div>
-                <form onSubmit={handleSubmit}>
-                  {form.map((item, index) => (
-                    <div key={`item-${index}`}>
-                      <div>
-                        <TextField
-                          id="standard-basic"
-                          label={`Pytanie ${index + 1}`}
-                          sx={{ mb: 3, width: "100%", mt: 3 }}
-                          name="Question"
-                          value={item.Question}
-                          InputProps={{
-                            endAdornment: <DelButton index={index} />,
-                          }}
-                          onChange={(e) => onChange(index, e)}
-                        ></TextField>
-
-                        <div className="row  justify-content-center">
-                          <Paper
-                            sx={{
-                              p: "2px 4px",
-                              display: "flex",
-                              alignItems: "center",
-                              width: "80%",
-                              mb: 1,
-                            }}
-                          >
-                            <IconButton sx={{ p: "10px" }} aria-label="menu">
-                              A
-                            </IconButton>
-                            <InputBase
-                              sx={{ ml: 1, flex: 1 }}
-                              placeholder=""
-                              name="A"
-                              onChange={(e) => onChange(index, e)}
-                            />
-                            <Checkbox
-                              color="success"
-                              name="correctA"
-                              checked={item.name}
-                              onChange={(e) => handleChange(index, e)}
-                            />
-                          </Paper>
-
-                          <Paper
-                            sx={{
-                              p: "2px 4px",
-                              display: "flex",
-                              alignItems: "center",
-                              width: "80%",
-                              mb: 1,
-                            }}
-                          >
-                            <IconButton sx={{ p: "10px" }} aria-label="menu">
-                              B
-                            </IconButton>
-                            <InputBase
-                              sx={{ ml: 1, flex: 1 }}
-                              placeholder=""
-                              name="B"
-                              onChange={(e) => onChange(index, e)}
-                            />
-                            <Checkbox
-                              color="success"
-                              name="correctB"
-                              checked={item.name}
-                              onChange={(e) => handleChange(index, e)}
-                            />
-                          </Paper>
-
-                          <Paper
-                            sx={{
-                              p: "2px 4px",
-                              display: "flex",
-                              alignItems: "center",
-                              width: "80%",
-                              mb: 1,
-                            }}
-                          >
-                            <IconButton sx={{ p: "10px" }} aria-label="menu">
-                              C
-                            </IconButton>
-                            <InputBase
-                              sx={{ ml: 1, flex: 1 }}
-                              placeholder=""
-                              name="C"
-                              onChange={(e) => onChange(index, e)}
-                            />
-                            <Checkbox
-                              color="success"
-                              name="correctC"
-                              checked={item.name}
-                              onChange={(e) => handleChange(index, e)}
-                            />
-                          </Paper>
-
-                          <Paper
-                            sx={{
-                              p: "2px 4px",
-                              display: "flex",
-                              alignItems: "center",
-                              width: "80%",
-                            }}
-                          >
-                            <IconButton sx={{ p: "10px" }} aria-label="menu">
-                              D
-                            </IconButton>
-                            <InputBase
-                              sx={{ ml: 1, flex: 1 }}
-                              placeholder=""
-                              name="D"
-                              onChange={(e) => onChange(index, e)}
-                            ></InputBase>
-                            <Checkbox
-                              color="success"
-                              name="correctD"
-                              checked={item.name}
-                              onChange={(e) => handleChange(index, e)}
-                            />
-                          </Paper>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  <Button
-                    className="mt-2"
-                    variant="contained"
-                    type="submit"
-                    color="success"
-                    onClick={handleAddForm}
-                  >
-                    Zapisz
-                  </Button>
-                </form>
-              </div>
+              {form && <List form={form} />}
+              <Button
+                className="mt-2"
+                variant="contained"
+                type="submit"
+                color="success"
+              >
+                Zapisz
+              </Button>
             </div>
             <div className="d-flex align-items-end justify-content-end">
               <div>

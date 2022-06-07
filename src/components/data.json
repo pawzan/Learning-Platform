@@ -1,0 +1,177 @@
+[
+    {
+        "id": "2",
+        "pytanie": "Chcę nauczyć się robić coś nowego na komputerze. Ja bym:",
+        "odpowiedzi" : [
+            
+               "porozmawiaj z osobami, które znają program.",
+              "zacznij go używać i ucz się metodą prób i błędów.",
+               "przeczytaj pisemne instrukcje dołączone do programu.",
+             "postępuj zgodnie ze schematami w książce."
+            
+        ]
+      },
+      {
+        "id": "3",
+        "pytanie": "Mam problem z sercem. Wolałbym, żeby lekarz: ",
+        "odpowiedzi" : [
+            "dał mi coś do przeczytania, aby wyjaśnić, co się stało.",
+            "pokazał mi schemat co było nie tak",
+            "użył plastikowego modelu, aby pokazać mi, co jest nie tak",
+            "opisał, co było nie tak"
+            
+        ]
+      },
+      {
+        "id": "4",
+        "pytanie": "Chcę się nauczyć, jak robić lepsze zdjęcia. Ja bym: ",
+        "odpowiedzi" : [
+            "skorzystaj z pisemnych instrukcji dotyczących tego, co robić.",
+            "użyj diagramów pokazujących aparat i co robi każda część.",
+            "użyj przykładów dobrych i kiepskich zdjęć pokazujących, jak je poprawić.",
+            "zadawaj pytania i rozmawiaj o aparacie i jego funkcjach."
+            
+        ]
+      },
+      {
+        "id": "5",
+        "pytanie": "Chcę złożyć drewniany stół, który przyszedł w częściach (zestaw). Najlepiej bym się nauczył od: ",
+        "odpowiedzi" : [
+            "pisemne instrukcje dołączone do części do stołu.",
+            "porady od kogoś, kto już to zrobił.",
+            "schematy przedstawiające każdy etap montażu.",
+            "oglądanie wideo osoby montującej podobny stół."
+            
+        ]
+      },
+      {
+        "id": "6",
+        "pytanie": "Muszę znaleźć drogę do sklepu, który polecił mi znajomy. Ja bym: ",
+        "odpowiedzi" : [
+            "dowiedz się, gdzie znajduje się sklep w stosunku do miejsca, które znam.",
+            "zapisz kierunki, które muszę zapamiętać.",
+            "użyj mapy.",
+            "poproś mojego przyjaciela, aby podał mi drogę."
+            
+        ]
+      },
+      {
+        "id": "7",
+        "pytanie": "Chcę dowiedzieć się więcej o trasie, w której się wybieram. Ja bym: ",
+        "odpowiedzi" : [
+          "użyj mapy i zobacz, gdzie są miejsca.",
+          "porozmawiaj z osobą, która zaplanowała wycieczkę lub innymi, którzy wybierają się na wycieczkę.",
+"spójrz na szczegóły dotyczące najważniejszych wydarzeń i działań podczas wycieczki.",
+"przeczytaj o wycieczce na trasie."
+            
+        ]
+      },
+      {
+        "id": "8",
+        "pytanie": "Chcę dowiedzieć się o nowym projekcie. prosiłbym o: ",
+        "odpowiedzi" : [
+            "pisemny raport opisujący główne cechy projektu.",
+            "przykłady, w których projekt został pomyślnie wykorzystany.",
+            "diagramy pokazujące etapy projektu wraz z wykresami korzyści i kosztów.",
+            "okazja do omówienia projektu."
+            
+        ]
+      },
+      {
+        "id": "9",
+        "pytanie": "Na stronie internetowej znajduje się film pokazujący, jak zrobić specjalny wykres lub wykres. Jest osoba mówiąca, kilka list i słów opisujących, co robić i kilka diagramów. Najwięcej nauczyłbym się z: ",
+        "odpowiedzi" : [
+            "widząc schematy.",
+"słuchający.",
+"obserwując akcje.",
+"czytanie słów."
+            
+        ]
+      },
+      {
+      "id": "10",
+      "pytanie": "Chcę nauczyć się grać w nową grę planszową lub karcianą. Ja bym:",
+      "odpowiedzi" : [
+        "użyj diagramów, które wyjaśniają różne etapy, ruchy i strategie w grze.",
+        "Przeczytaj instrukcję.",
+        "posłuchaj, jak ktoś to wyjaśnia i zadawaj pytania.",
+        "obserwuj, jak inni grają w grę, zanim dołączysz."
+      ]
+    },
+    {
+        "id": "11",
+        "pytanie": "Chcę dowiedzieć się czegoś o domu lub mieszkaniu. Przed wizytą chciałbym:",
+        "odpowiedzi" : [
+            "dyskusja z właścicielem.",
+           " aby obejrzeć film z nieruchomości.",
+           " drukowany opis pomieszczeń i funkcji.",
+            "plan z zaznaczeniem pomieszczeń i mapą okolicy."
+        ]
+      },
+      {
+        "id": "12",
+        "pytanie": "Ucząc się z internetu lubię:",
+        "odpowiedzi" : [
+            "kanały audio, na których mogę słuchać podcastów lub wywiadów.",
+"ciekawy design i cechy wizualne.",
+"filmy pokazujące, jak robić lub robić rzeczy.",
+"ciekawe opisy pisemne, wykazy i objaśnienia."
+        ]
+      },
+      {
+      "id": "13",
+      "pytanie": "Przy wyborze zawodu lub kierunku studiów ważne są dla mnie:",
+      "odpowiedzi" : [
+         
+"Komunikowanie się z innymi poprzez dyskusję.",
+"Dobre używanie słów w komunikacji pisemnej.",
+"Praca z projektami, mapami lub wykresami.",
+"Stosowanie mojej wiedzy w rzeczywistych sytuacjach."
+      ]
+    },
+    {
+        "id": "14",
+        "pytanie": "Preferuję prezentera lub lektora, który korzysta z:",
+        "odpowiedzi" : [
+           
+            "materiały informacyjne, książki lub odczyty.",
+           " diagramy, wykresy, mapy lub wykresy.",
+           " pytania i odpowiedzi, dyskusja, dyskusja grupowa lub mówcy gościnni.",
+          "  pokazy, modele czy sesje praktyczne."
+        ]
+      },
+      {
+        "id": "15",
+        "pytanie": "Chcę zaoszczędzić więcej pieniędzy i wybrać jedną z wielu opcji. Ja bym:",
+        "odpowiedzi" : [
+           
+           
+"użyj wykresów przedstawiających różne opcje dla różnych okresów.",
+"rozważ przykłady każdej opcji z wykorzystaniem moich informacji finansowych.",
+"przeczytaj drukowaną broszurę, która szczegółowo opisuje opcje.",
+"porozmawiaj z ekspertem o opcjach."
+        ]
+      },
+      {
+        "id": "16",
+        "pytanie": "Kiedy się uczę:",
+        "odpowiedzi" : [
+           
+            "czytać książki, artykuły i materiały informacyjne.",
+            "            lubię rozmawiać.",
+            "użyj przykładów i aplikacji.",
+            "widzieć wzorce w rzeczach."
+        ]
+      }
+
+
+   
+
+   
+  ]
+  
+
+ 
+
+
+

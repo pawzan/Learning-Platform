@@ -23,6 +23,7 @@ import axios from "axios";
 import { Navigate, useNavigate, Redirect } from "react-router-dom";
 import NewCourse from "./components/NewCourse";
 import LogoutPage from "./components/LogoutPage";
+import Questionnaire from "./components/Questionnaire";
 
 class App extends React.Component {
   constructor(props) {
@@ -96,7 +97,8 @@ class App extends React.Component {
     const isLogged = this.isUserLogged();
     const user = this.getUser();
     const nick = this.getNick();
-    const id = this.getId();
+    const idd = this.getId();
+    console.log(idd);
     if (!isLogged) {
       return (
         <>
@@ -140,7 +142,7 @@ class App extends React.Component {
               <Route
                 exact
                 path="/newCourse"
-                component={(props) => <NewCourse nick={nick} id={id} />}
+                component={(props) => <NewCourse nick={nick} id={idd} />}
               />
               <Route
                 exact
@@ -161,9 +163,9 @@ class App extends React.Component {
               />
               <Route
                 exact
-                path="/quiz/:id/lesson/:id"
+                path="/quiz/:id/lesson/:lessonid"
                 component={(props) => (
-                  <Quiz lessonId={props.match.params.id} nick={nick} />
+                  <Quiz lessonId={props.match.params.lessonid} nick={nick} />
                 )}
               />
               <Route exact path="/newCourse" component={newCourse} />
@@ -175,6 +177,7 @@ class App extends React.Component {
                     courseId={props.match.params.id}
                     nick={nick}
                     lessonId={props.match.params.lessonid}
+                    id_user={idd}
                   />
                 )}
               />

@@ -168,6 +168,41 @@ legend.scheduler-border {
   font-family: "Times New Roman", Times, serif;
 }
 
-.jodit-status-bar{
+.tox-statusbar{
   visibility: hidden;
+}
+
+.question-box {
+  background: #fff;
+  border-radius: 9px;
+  box-shadow: 5px 5px 5px 5px rgb(187, 185, 185);
+  padding: 10px;
+  width: 60%;
+  margin-top: 2;
+  float: left;
+  
+  transform: translate(33%, -0%);
+ 
+}
+
+.question-box h1 {
+  font-size: 1.1em;
+  margin-bottom: 6px;
+  margin-top: 3%;
+  margin-left: 3%;
+}
+hr {
+  color: rgb(216, 215, 215);
+  border-bottom: 0px;
+}
+.question-box p {
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin-top: 0px;
+  margin-left: 3%;
+}
+.option-list {
+  margin-left: 3%;
 }
