@@ -6,17 +6,6 @@ Read/Write, Kinesthetic ← VARK Learning Theory ). For lesson we can add Quiz c
 one or more correct answer. Not logged in student can check what coures are available but he must register and make questionnare to enter(what type of teaching suits him).
 
 
-Not logged Page:
-
-![](../Zrzuty Ekranu/Zrzut ekranu 2022-06-11 o 01.18.56.png)
-
-Login Page:
-
-![](../Zrzuty Ekranu/Zrzut ekranu 2022-06-11 o 01.20.35.png)
-
-Register Page:
-
-![](../Zrzuty Ekranu/Zrzut ekranu 2022-06-11 o 01.22.19.png)
 
 
 
