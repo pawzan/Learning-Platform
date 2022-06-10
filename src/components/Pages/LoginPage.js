@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import mainLogo from "./Logo.png";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { propTypes } from "react-bootstrap/esm/Image";
-import { Button } from "@mui/material";
-import Home from "./Home";
 
-const Login = (props) => {
+// logo
+import mainLogo from "../assets/Logo.png";
+
+//motion
+import { motion } from "framer-motion";
+
+//mui imports
+import { Button } from "@mui/material";
+
+const LoginPage = (props) => {
   const [login, setLogin] = useState("");
   const [haslo, setHaslo] = useState("");
   const Register = "/Register";
@@ -105,4 +109,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default LoginPage;

@@ -1,22 +1,23 @@
-import React, { Component, useEffect, useState, useRef } from "react";
-import { TiDelete, TiEdit, TiEye } from "react-icons/ti";
-import { Link, Redirect } from "react-router-dom";
-import RichtextEditor from "./RichtextEditor";
-import { MdQuiz, MdGrading } from "react-icons/md";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import AddIcon from "@mui/icons-material/Add";
-import Modal from "./Modal";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import TeachingMenu from "./TeachingMenu";
+
+//icons import
+import { TiDelete } from "react-icons/ti";
+import { MdQuiz, MdGrading } from "react-icons/md";
+
+//mui import
+import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
 
-const ShowCourse = (props) => {
+import TeachingPageMenu from "../molecules/TeachingPageMenu";
+
+const CourseLessonPage = ({ courseId, nick }) => {
   const [lessonList, setLessonList] = useState(null);
 
   const loadLesson = async () => {
     const result = await axios.get(
-      `http://localhost/api/lessonsd.php?json=${props.courseId}`
+      `http://localhost/api/lessonsd.php?json=${courseId}`
     );
     setLessonList(result.data.lessonData);
     console.log(result.data.lessonData);
@@ -27,7 +28,7 @@ const ShowCourse = (props) => {
   }, []);
 
   const handleLessonAdd = async () => {
-    const id = props.courseId;
+    const id = courseId;
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -69,7 +70,7 @@ const ShowCourse = (props) => {
 
     return (
       <div className="mt-2 shadow">
-        <div className="card">
+        <div className="card" style={{ border: "0" }}>
           <h5 className="card-header ">
             <div className="float-start">
               <input
@@ -77,6 +78,7 @@ const ShowCourse = (props) => {
                   backgroundColor: "#f7f7f7",
                   border: 0,
                   minWidth: "100px",
+                  fontSize: "27px",
                 }}
                 name="title"
                 value={lessonTitle}
@@ -87,37 +89,40 @@ const ShowCourse = (props) => {
             <div className="float-end">
               <Link
                 to={{
-                  pathname: `/quiz/${props.courseId}/lesson/${lesson.id}`,
+                  pathname: `/quiz/${courseId}/lesson/${lesson.id}`,
                   state: {
                     stateParam: lesson.content,
                     stateParam1: lesson.tittle,
+
                   },
                 }}
               >
-                <a className="text-success">
-                  <MdQuiz />
-                </a>
+                <MdQuiz
+                  size={35}
+                  style={{ color: "#575151", float: "start" }}
+                />
               </Link>
 
               <Link
                 to={{
-                  pathname: `/showCourse/${props.courseId}/lesson/${lesson.id}`,
+                  pathname: `/showCourse/${courseId}/lesson/${lesson.id}`,
                   state: {
                     stateParam: lesson.content,
                     stateParam1: lesson.tittle,
                   },
                 }}
               >
-                <a className="text-success">
-                  <MdGrading />
-                </a>
+                <MdGrading
+                  size={35}
+                  style={{ color: "#575151", float: "start" }}
+                />
               </Link>
-              <a
-                className="text-danger"
+
+              <TiDelete
+                size={35}
+                style={{ color: "#b52f2f", float: "start" }}
                 onClick={() => handleLessonDelete(lesson.id)}
-              >
-                <TiDelete />
-              </a>
+              />
             </div>
           </h5>
         </div>
@@ -125,7 +130,7 @@ const ShowCourse = (props) => {
     );
   };
 
-  const List = (props) =>
+  const List = () =>
     lessonList.map((lesson, index) => (
       <div key={`item-${index}`}>
         <CompList lesson={lesson} />
@@ -136,9 +141,9 @@ const ShowCourse = (props) => {
     <>
       <div className="container-fluid">
         <div className="row fill">
-          <TeachingMenu nick={props.nick} />
+          <TeachingPageMenu nick={nick} />
           <div className="col">
-            <h1 className="p1 mt-2">Dodaj lekcje</h1>
+            <h1 className="p1 mt-2">PANEL LEKCJI</h1>
             <div className="container my-3 mt-3">
               {lessonList && <List lessonList={lessonList} />}
             </div>
@@ -152,4 +157,4 @@ const ShowCourse = (props) => {
   );
 };
 
-export default ShowCourse;
+export default CourseLessonPage;

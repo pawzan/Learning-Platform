@@ -1,25 +1,36 @@
 import * as React from "react";
 import { motion } from "framer-motion";
-import obrazek from "./kurs.jpg";
+import obrazek from "../assets/kurs.jpg";
 import { BsHeadphones } from "react-icons/bs";
 import { FaRegEye } from "react-icons/fa";
 import { BiTask } from "react-icons/bi";
-import { Link, Redirect } from "react-router-dom";
-import { useReducedMotion } from "framer-motion/dist/framer-motion";
+import { Link } from "react-router-dom";
+import { FaHandPaper } from "react-icons/fa";
+import axios from "axios";
+import {useEffect, useState} from "react";
 
-const CourseContainer = (props) => {
-  const [getInputValue, setGetInputValue] = React.useState("");
-
+const CourseViewComponent = (props) => {
   const frameVariants = {
     hover: { scale: 1.005 },
   };
+const [lesson_id, setLesson_id]= useState("")
 
-  const handleChange = (e) => {
-    setGetInputValue(e.target.value);
+  console.log("sd: " + lesson_id)
+  const firstLessonID = async () => {
+    const result = await axios.get(
+        `http://localhost/api/select.php?json=${props.courseId}`
+    );
+    setLesson_id(result.data.lessonData);
+    console.log(result.data.lessonData);
   };
 
+  useEffect(() => {
+    firstLessonID();
+  }, []);
+
+
   let { course, filter, menu, filterAuthor } = props;
-  const showCourse = "/showCourse/";
+
   if (filter !== "") {
     course = course.filter(
       (courses) =>
@@ -35,21 +46,15 @@ const CourseContainer = (props) => {
     let buttons;
     buttons = (
       <div className="float-end">
-        {courses.singup === false ? (
-          <a
-            className="btn text-white bg-dark bg-gradient"
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
-          >
-            Zapisz się
-          </a>
+        {props.isLogged === false ? (
+          <></>
         ) : menu === true ? (
           <Link to={`Course/${courses.id}/*`}>
-            <a className="btn text-white bg-dark bg-gradient">Wejdź</a>
+            <div className="btn text-white bg-dark bg-gradient">Wejdź</div>
           </Link>
         ) : (
           <Link to={`showCourse/${courses.id}`}>
-            <a className="btn text-white bg-dark bg-gradient">Wejdź</a>
+            <div className="btn text-white bg-dark bg-gradient">Wejdź</div>
           </Link>
         )}
       </div>
@@ -57,7 +62,7 @@ const CourseContainer = (props) => {
 
     return (
       <>
-        <div key={courses.id}>
+        <div key={`item-${index}`}>
           <div className="row mb-3">
             <div className="col-12 col-md-12 col-lg-12 col-xxl-10">
               <motion.div variants={frameVariants} whileHover="hover">
@@ -65,6 +70,7 @@ const CourseContainer = (props) => {
                   <div className="card-horizontal">
                     <div className="img-square-wrapper">
                       <img
+                        alt="obrazek"
                         className=""
                         src={obrazek}
                         width="150"
@@ -90,6 +96,7 @@ const CourseContainer = (props) => {
                       <BsHeadphones size={20} />
                       <BiTask size={20} />
                       <FaRegEye size={20} />
+                      <FaHandPaper size={20} />
                     </div>
                   </div>
                 </div>
@@ -97,54 +104,8 @@ const CourseContainer = (props) => {
             </div>
           </div>
         </div>
-        <div
-          className="modal fade"
-          id="staticBackdrop"
-          // data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabindex="-1"
-          aria-labelledby="staticBackdropLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-body">
-                Podaj kod dostępu* :{" "}
-                <input className="modalInput" onChange={handleChange}></input>
-              </div>
-
-              <div className="modal-footer">
-                <small>
-                  *kod dostępu jest udostępniany przez nauczyciela
-                  {courses.password}
-                </small>
-                <button
-                  type="button"
-                  className="btn btn-secondary buttonMargin"
-                  data-bs-dismiss="modal"
-                >
-                  Zamknij
-                </button>
-
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={() => {
-                    if (courses.password === getInputValue) {
-                      console.log("yes");
-                    } else {
-                      console.log("no");
-                    }
-                  }}
-                >
-                  Dołącz
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
       </>
     );
   });
 };
-export default CourseContainer;
+export default CourseViewComponent;

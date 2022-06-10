@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import ReactHtmlParser from "react-html-parser";
 import axios from "axios";
 
@@ -26,10 +26,7 @@ function CourseContent({ lessonId, courseId, id_user }) {
     ));
   };
 
-  //   {ReactHtmlParser(lesson.content)}
-  console.log("lesson " + lessonId);
-
-  return <>{lessonList && <Items lessonList={lessonList} />}</>;
+  return <div className="border mt-4 shadow-sm p-3 mb-5 bg-body rounded">{lessonList && <Items lessonList={lessonList} />}</div>;
 }
 
 export default CourseContent;

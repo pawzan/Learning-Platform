@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
-import CourseContainer from "./CourseContainer";
-import Menu from "./Menu";
-import MenuLog from "./MenuLog";
-import teachingMode from "./TeachingMenu";
-import courseApi from "../api/coursApi";
-import useFetchAPI from "../api/coursApi";
-import { useReducedMotion } from "framer-motion/dist/framer-motion";
+import CourseViewComponent from "../molecules/CourseViewComponent";
+import Menu from "../molecules/Menu";
+import MenuLog from "../molecules/MenuLog";
 
-const Home = (props) => {
+const HomePage = (props) => {
   const [course, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [filterBy, setFilterBy] = useState("");
@@ -24,30 +20,40 @@ const Home = (props) => {
         });
     }, 500);
   }, []);
-  console.log("to Filter " + filterBy);
 
   return (
     <div>
       {props.user ? (
-        <Menu setSearch={setFilterBy} user={props.user} nick={props.nick} />
+        <Menu
+          setSearch={setFilterBy}
+          user={props.user}
+          nick={props.nick}
+          type={props.type}
+          id={props.id}
+        />
       ) : (
         <MenuLog setSearch={setFilterBy} />
       )}
 
       {isLoading && (
         <div className="container my-5 mt-5 fv">
-          <div class="spinner-border" role="status">
-            <span class="sr-only"></span>
+          <div className="spinner-border" role="status">
+            <span className="sr-only"></span>
           </div>
         </div>
       )}
       <div className="container my-5 mt-5 fv">
         {course && (
-          <CourseContainer course={course} filter={filterBy} menu={true} />
+          <CourseViewComponent
+            isLogged={props.isLogged}
+            course={course}
+            filter={filterBy}
+            menu={true}
+          />
         )}
       </div>
     </div>
   );
 };
 
-export default Home;
+export default HomePage;

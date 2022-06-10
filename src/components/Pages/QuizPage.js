@@ -1,18 +1,16 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import TeachingMenu from "./TeachingMenu";
+import TeachingPageMenu from "../molecules/TeachingPageMenu";
 import TextField from "@mui/material/TextField";
-import { Button, Checkbox, Switch } from "@mui/material";
+import { Button, Checkbox } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 
-const Quiz = ({ lessonId, nick }) => {
-  const { stateParam, stateParam1 } = useLocation().state;
-  const [lessonID, setLessonId] = useState(lessonId);
+const QuizPage = ({ lessonId, nick }) => {
+  const [lessonID] = useState(lessonId);
   const [form, setForm] = useState(null);
   const [count, setCount] = useState(0);
 
@@ -152,7 +150,7 @@ const Quiz = ({ lessonId, nick }) => {
                   color="success"
                   name="correctA"
                   value="correctA"
-                  checked={correctA == 1 ? true : false}
+                  checked={correctA === 1 ? true : false}
                   onClick={(e) => {
                     setCorrectA(e.target.checked === false ? 0 : 1);
                   }}
@@ -183,7 +181,7 @@ const Quiz = ({ lessonId, nick }) => {
                 <Checkbox
                   color="success"
                   name="correctB"
-                  checked={correctB == 1 ? true : false}
+                  checked={correctB === 1 ? true : false}
                   onClick={(e) => {
                     setCorrectB(e.target.checked === false ? 0 : 1);
                   }}
@@ -214,7 +212,7 @@ const Quiz = ({ lessonId, nick }) => {
                 <Checkbox
                   color="success"
                   name="correctC"
-                  checked={correctC == 1 ? true : false}
+                  checked={correctC === 1 ? true : false}
                   onClick={(e) => {
                     setCorrectC(e.target.checked === false ? 0 : 1);
                   }}
@@ -244,7 +242,7 @@ const Quiz = ({ lessonId, nick }) => {
                 <Checkbox
                   color="success"
                   name="correctD"
-                  checked={correctD == 1 ? true : false}
+                  checked={correctD === 1 ? true : false}
                   onClick={(e) => {
                     setCorrectD(e.target.checked === false ? 0 : 1);
                   }}
@@ -264,28 +262,24 @@ const Quiz = ({ lessonId, nick }) => {
       </div>
     ));
 
-  const label = { inputProps: { "aria-label": "Switch demo" } };
   return (
     <>
       <div className="container-fluid">
         <div className="row fill">
-          <TeachingMenu nick={nick} />
+          <TeachingPageMenu nick={nick} />
           <div className="col mt-5">
             <h1 className="p1">Quiz do lekcji</h1>
             <div className="container my-5 ">
               {form && <List form={form} />}
-              <Button
-                className="mt-2"
-                variant="contained"
-                type="submit"
-                color="success"
-              >
-                Zapisz
-              </Button>
             </div>
             <div className="d-flex align-items-end justify-content-end">
               <div>
                 <Fab
+                  style={{
+                    position: "fixed",
+                    bottom: "50px",
+                    right: "50px",
+                  }}
                   variant="contained"
                   color="primary"
                   onClick={handleAddForm}
@@ -301,4 +295,4 @@ const Quiz = ({ lessonId, nick }) => {
   );
 };
 
-export default Quiz;
+export default QuizPage;

@@ -1,6 +1,6 @@
 import React from "react";
 
-class FormDescriptionDetails extends React.Component {
+class FormDescription extends React.Component {
   continue = (e) => {
     // e.preventDefault();
     this.props.nextStep();
@@ -40,4 +40,4 @@ class FormDescriptionDetails extends React.Component {
   }
 }
 
-export default FormDescriptionDetails;
+export default FormDescription;

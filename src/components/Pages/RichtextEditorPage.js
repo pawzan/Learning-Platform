@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import JoditEditor from "jodit-react";
-import { useLocation, useParamsś } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
-import TeachingMenu from "./TeachingMenu";
+import TeachingPageMenu from "../molecules/TeachingPageMenu";
 import TextField from "@mui/material/TextField";
 import { Button, Switch } from "@mui/material";
 import { BsHeadphones } from "react-icons/bs";
@@ -12,7 +12,7 @@ import { FaRegEye } from "react-icons/fa";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 
-const RichtextEditor = ({ lessonId, nick }) => {
+const RichtextEditorPage = ({ lessonId, nick, courseId }) => {
   const { stateParam1 } = useLocation().state;
 
   const [form, setForm] = useState(null);
@@ -38,6 +38,7 @@ const RichtextEditor = ({ lessonId, nick }) => {
   const handleAddForm = async () => {
     const inputState = {
       lesson_id: lessonId,
+      course_id: courseId,
       content: " ",
       v: true,
       a: true,
@@ -74,7 +75,7 @@ const RichtextEditor = ({ lessonId, nick }) => {
     const [kinestetic, setKinestetic] = useState(item.kinestetic);
     const id = item.id;
 
-    const text = { content, id, auditory, writing, visual, kinestetic };
+    const text = { content, id, auditory, writing, visual, kinestetic, courseId };
     const handleSubmit = (e) => {
       fetch("http://localhost/api/textUpdate.php", {
         method: "POST",
@@ -162,7 +163,7 @@ const RichtextEditor = ({ lessonId, nick }) => {
   return (
     <div className="container-fluid">
       <div className="row fill">
-        <TeachingMenu nick={nick} />
+        <TeachingPageMenu nick={nick} />
         <div className="col mt-5">
           <h1 className="p1">Lekcja z treścią</h1>
           <div className="container my-5 ">
@@ -177,19 +178,16 @@ const RichtextEditor = ({ lessonId, nick }) => {
               ></TextField>
 
               {form && <List form={form} />}
-              <Button
-                className="mt-2"
-                variant="contained"
-                type="submit"
-                color="success"
-              >
-                Zapisz
-              </Button>
             </div>
           </div>
           <div className="d-flex align-items-end justify-content-end">
             <div>
-              <Fab variant="contained" color="primary" onClick={handleAddForm}>
+              <Fab
+                style={{ position: "fixed", bottom: "50px", right: "50px" }}
+                variant="contained"
+                color="primary"
+                onClick={handleAddForm}
+              >
                 <AddIcon />
               </Fab>
             </div>
@@ -200,4 +198,4 @@ const RichtextEditor = ({ lessonId, nick }) => {
   );
 };
 
-export default RichtextEditor;
+export default RichtextEditorPage;

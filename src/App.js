@@ -1,29 +1,26 @@
-import "./App.css";
-import Login from "./components/Login";
-import React from "react";
-import Register from "./components/Register";
-import Home from "./components/Home";
-import Menu from "./components/Menu";
-import TeachingPage from "./components/TeachingPage";
-import Quiz from "./components/Quiz";
-
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Switch,
-} from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion/dist/framer-motion";
-import newCourse from "./components/NewCourse";
-import ShowCourse from "./components/ShowCourse";
-import RichtextEditor from "./components/RichtextEditor";
-import Course from "./components/Course";
-import CourseContent from "./components/CourseContent";
 import axios from "axios";
-import { Navigate, useNavigate, Redirect } from "react-router-dom";
-import NewCourse from "./components/NewCourse";
-import LogoutPage from "./components/LogoutPage";
-import Questionnaire from "./components/Questionnaire";
+import { Redirect } from "react-router-dom";
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+
+//import motion
+import { AnimatePresence } from "framer-motion/dist/framer-motion";
+
+//imports components
+import Register from "./components/Pages/RegisterPage";
+import HomePage from "./components/Pages/HomePage";
+import TeachingPage from "./components/Pages/TeachingPage";
+import QuizPage from "./components/Pages/QuizPage";
+import newCourse from "./components/Pages/NewCoursePage";
+import CourseLessonPage from "./components/Pages/CourseLessonPage";
+import RichtextEditorPage from "./components/Pages/RichtextEditorPage";
+import Course from "./components/Pages/CoursePage";
+import Login from "./components/Pages/LoginPage";
+import NewCoursePage from "./components/Pages/NewCoursePage";
+import LogoutPage from "./components/atoms/LogoutPage";
+
+//import styles
+import "./App.css";
 
 class App extends React.Component {
   constructor(props) {
@@ -92,13 +89,18 @@ class App extends React.Component {
           JSON.parse(window.sessionStorage.getItem("user")).surname
       : null;
   }
+  getType() {
+    return window.sessionStorage.getItem("is_logged")
+      ? JSON.parse(window.sessionStorage.getItem("user")).type
+      : null;
+  }
 
   render() {
     const isLogged = this.isUserLogged();
     const user = this.getUser();
     const nick = this.getNick();
     const idd = this.getId();
-    console.log(idd);
+    const type = this.getType();
     if (!isLogged) {
       return (
         <>
@@ -114,7 +116,9 @@ class App extends React.Component {
                 <Route
                   exact
                   path="/"
-                  component={(props) => <Home user={user} />}
+                  component={(props) => (
+                    <HomePage user={user} isLogged={isLogged} />
+                  )}
                 />
                 <Redirect exact from="*" to="/" />
               </Switch>
@@ -132,7 +136,9 @@ class App extends React.Component {
               <Route
                 exact
                 path="/"
-                component={(props) => <Home nick={nick} user={user} />}
+                component={(props) => (
+                  <HomePage nick={nick} user={user} type={type} id={idd} />
+                )}
               />
               <Route
                 exact
@@ -142,22 +148,23 @@ class App extends React.Component {
               <Route
                 exact
                 path="/newCourse"
-                component={(props) => <NewCourse nick={nick} id={idd} />}
+                component={(props) => <NewCoursePage nick={nick} id={idd} />}
               />
               <Route
                 exact
                 path="/showCourse/:id"
                 component={(props) => (
-                  <ShowCourse courseId={props.match.params.id} nick={nick} />
+                  <CourseLessonPage courseId={props.match.params.id} nick={nick} />
                 )}
               />
               <Route
                 exact
-                path="/showCourse/:id/lesson/:id"
+                path="/showCourse/:id_course/lesson/:id"
                 component={(props) => (
-                  <RichtextEditor
+                  <RichtextEditorPage
                     lessonId={props.match.params.id}
                     nick={nick}
+                    courseId={props.match.params.id_course}
                   />
                 )}
               />
@@ -165,7 +172,7 @@ class App extends React.Component {
                 exact
                 path="/quiz/:id/lesson/:lessonid"
                 component={(props) => (
-                  <Quiz lessonId={props.match.params.lessonid} nick={nick} />
+                  <QuizPage lessonId={props.match.params.lessonid} nick={nick} />
                 )}
               />
               <Route exact path="/newCourse" component={newCourse} />
@@ -178,19 +185,10 @@ class App extends React.Component {
                     nick={nick}
                     lessonId={props.match.params.lessonid}
                     id_user={idd}
+                    type={type}
                   />
                 )}
               />
-              {/* <Route
-                exact
-                path="/Course/:courseId/:id"
-                component={(props) => (
-                  <CourseContent
-                    courseId={props.match.params.courseId}
-                    lessonId={props.match.params.id}
-                  />
-                )}
-              /> */}
               <Route exact path="/logout">
                 <LogoutPage onLogout={this.onLogout} />
               </Route>

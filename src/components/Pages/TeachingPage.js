@@ -1,18 +1,8 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Switch,
-} from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion/dist/framer-motion";
-import TeachingMenu from "./TeachingMenu";
-import CourseMaker from "./CourseMaker";
-import NewCourse from "./NewCourse";
-import CourseContainer from "./CourseContainer";
+import TeachingPageMenu from "../molecules/TeachingPageMenu";
+import TeachingPageHeader from "../molecules/TeachingPageHeader";
+
+import CourseViewComponent from "../molecules/CourseViewComponent";
 import React, { useEffect, useState } from "react";
-import ShowCourse from "./ShowCourse";
-import RichtextEditor from "./RichtextEditor";
-import { propTypes } from "react-bootstrap/esm/Image";
 
 const TeachingPage = (props) => {
   const [course, setCourse] = useState(null);
@@ -36,15 +26,15 @@ const TeachingPage = (props) => {
     <>
       <div className="container-fluid">
         <div className="row fill">
-          <TeachingMenu nick={props.nick} />
+          <TeachingPageMenu nick={props.nick} />
           <div className="col p-3 fs">
-            <CourseMaker setSearch={setFilterBy} />
+            <TeachingPageHeader setSearch={setFilterBy} />
             {isLoading && (
               <div className="container my-5 mt-5 fv">Ładuje...</div>
             )}
             <div className="container my-5 mt-2 fv">
               {course && (
-                <CourseContainer
+                <CourseViewComponent
                   course={course}
                   filter={filterBy}
                   filterAuthor={true}

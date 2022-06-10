@@ -1,4 +1,3 @@
-import { ResetTvOutlined } from "@mui/icons-material";
 import {
   Button,
   FormControl,
@@ -9,10 +8,9 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 
-import datas from "./data.json";
-import SetTypeForm from "./SetTypeForm";
+import datas from "../data.json";
 
-function Questionnaire({ prevStep, formData, setFormData }) {
+function QuestionnairePage({ prevStep, formData, setFormData }) {
   const [odpA, seOdpA] = useState(0);
   const [odpB, seOdpB] = useState(0);
   const [odpC, seOdpC] = useState(0);
@@ -36,11 +34,11 @@ function Questionnaire({ prevStep, formData, setFormData }) {
                     control={<Radio />}
                     label={odp}
                     onChange={() => {
-                      if (index == 0) {
+                      if (index === 0) {
                         seOdpA(odpA + 1);
-                      } else if (index == 1) {
+                      } else if (index === 1) {
                         seOdpB(odpB + 1);
-                      } else if (index == 2) {
+                      } else if (index === 2) {
                         seOdpC(odpC + 1);
                       } else if (odpD + 1) {
                         seOdpD(odpD + 1);
@@ -79,4 +77,4 @@ function Questionnaire({ prevStep, formData, setFormData }) {
   );
 }
 
-export default Questionnaire;
+export default QuestionnairePage;
