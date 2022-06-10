@@ -76,6 +76,7 @@ const LoginPage = (props) => {
                             <Button
                               className="btn btn-info btn-block fa-lg gradient-custom-2 mb-3"
                               type="submit"
+                              variant="contained"
                             >
                               Zaloguj
                             </Button>

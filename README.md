@@ -1,3 +1,26 @@
+## 👉 Learning platform and course management system.
+
+My project it's platform for make courses for student. We can make courses and add lesson. Each one
+lesson can have few texteditor. Teacher can tick for what type of student is this course (Visual, Audio,
+Read/Write, Kinesthetic ← VARK Learning Theory ). For lesson we can add Quiz component with many questions and set 
+one or more correct answer. Not logged in student can check what coures are available but he must register and make questionnare to enter(what type of teaching suits him).
+
+
+Not logged Page:
+
+![](../Zrzuty Ekranu/Zrzut ekranu 2022-06-11 o 01.18.56.png)
+
+Login Page:
+
+![](../Zrzuty Ekranu/Zrzut ekranu 2022-06-11 o 01.20.35.png)
+
+Register Page:
+
+![](../Zrzuty Ekranu/Zrzut ekranu 2022-06-11 o 01.22.19.png)
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
